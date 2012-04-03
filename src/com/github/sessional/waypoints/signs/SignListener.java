@@ -20,51 +20,51 @@ public class SignListener implements Listener
 {
 
     WpsSignPlugin wpsPlugin;
-    
+
     public SignListener(WpsSignPlugin wpsPlugin)
     {
         this.wpsPlugin = wpsPlugin;
     }
-    
+
     public WpsSignPlugin getPlugin()
     {
         return wpsPlugin;
     }
-    
+
     @EventHandler
     public void onSignChange(SignChangeEvent event)
     {
         for (int i = 0; i < event.getLines().length - 1; i++)
         {
-            if (event.getLine(i).equals("Waypoint:"))
+            if (event.getLine(i).contains("Waypoint:"))
             {
                 WpsPlugin plug = (WpsPlugin) getPlugin().getServer().getPluginManager().getPlugin("Waypoints");
-                if (plug.getCommandHandler().doesWaypointExist(event.getLine(i+1)))
+                if (plug.getCommandHandler().doesWaypointExist(event.getLine(i + 1)))
                 {
                     if (getPlugin().isBukkitPermissions())
                     {
                         if (event.getPlayer().hasPermission("waypoints.sign.create"))
                         {
-                            event.getPlayer().sendMessage("This sign will now teleport you to waypoint " + event.getLine(i+1));
+                            event.getPlayer().sendMessage("This sign will now teleport you to waypoint §a" + event.getLine(i + 1));
+                            event.setLine(i, "§aWaypoint:");
                         } else
                         {
                             event.getBlock().breakNaturally();
-                            event.getPlayer().sendMessage("You do not have permissions to create a sign. " + event.getLine(i+1));
+                            event.getPlayer().sendMessage("You do not have permissions to create a sign. " + event.getLine(i + 1));
                         }
-                    }
-                    else
+                    } else
                     {
-                        event.getPlayer().sendMessage("This sign will now teleport you to waypoint " + event.getLine(i+1));
+                        event.getPlayer().sendMessage("This sign will now teleport you to waypoint §a" + event.getLine(i + 1));
+                        event.setLine(i, "§aWaypoint:");
                     }
-                }
-                else
+                } else
                 {
-                    event.getPlayer().sendMessage("A waypoint with name " + event.getLine(i+1) + " does not seem to exist.");
+                    event.getPlayer().sendMessage("A waypoint with name " + event.getLine(i + 1) + " does not seem to exist.");
                 }
             }
         }
     }
-    
+
     @EventHandler
     public void onSignUse(PlayerInteractEvent event)
     {
@@ -73,10 +73,10 @@ public class SignListener implements Listener
             if (event.getClickedBlock().getType() == Material.SIGN_POST)
             {
                 Sign s = (Sign) event.getClickedBlock().getState();
-                
+
                 for (int i = 0; i < s.getLines().length - 1; i++)
                 {
-                    if (s.getLine(i).equals("Waypoint:"))
+                    if (s.getLine(i).equals("Waypoint:") || s.getLine(i).equals("§aWaypoint:"))
                     {
                         String wp = s.getLine(i + 1);
                         WpsPlugin plug = (WpsPlugin) getPlugin().getServer().getPluginManager().getPlugin("Waypoints");
@@ -84,6 +84,10 @@ public class SignListener implements Listener
                         {
                             if (event.getPlayer().hasPermission("waypoints.basic.go") || event.getPlayer().hasPermission("waypoints.sign.go"))
                             {
+                                if (!s.getLine(i).equals("§aWaypoint:"))
+                                {
+                                    s.setLine(i, "§aWaypoint:");
+                                }
                                 plug.getCommandHandler().doGo(event.getPlayer(), new String[]
                                         {
                                             wp
@@ -94,6 +98,12 @@ public class SignListener implements Listener
                             }
                         } else
                         {
+                            if (!s.getLine(i).equals("§aWaypoint:"))
+                            {
+                                System.out.println("Set color!");
+                                s.setLine(i, "§aWaypoint:");
+                                s.update();
+                            }
                             plug.getCommandHandler().doGo(event.getPlayer(), new String[]
                                     {
                                         wp
