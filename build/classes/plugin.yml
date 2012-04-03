@@ -1,0 +1,11 @@
+name: Waypoints.Signs
+version: 0.1
+main: com.github.sessional.waypoints.signs.WpsSignPlugin
+commands:
+  wpssigns:
+    description: root command
+    usage: /<command> [subcommand] [args]
+  waypointssigns:
+    description: root command
+    usage: /<command> [subcommand] [args]
+depend: [Waypoints]
