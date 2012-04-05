@@ -17,7 +17,7 @@ public class WpsSignPlugin extends JavaPlugin
 {
     
     private Logger log;
-    private String version = "0.1";
+    private String version = "0.1.1";
     private File configFile;
     private boolean bukkitPermissions;
     

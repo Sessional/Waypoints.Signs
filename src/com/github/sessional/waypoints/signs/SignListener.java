@@ -5,10 +5,12 @@
 package com.github.sessional.waypoints.signs;
 
 import com.github.sessional.waypoints.WpsPlugin;
+import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.block.Sign;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
@@ -68,9 +70,9 @@ public class SignListener implements Listener
     @EventHandler
     public void onSignUse(PlayerInteractEvent event)
     {
-        if (event.hasBlock() && event.getAction() == event.getAction().RIGHT_CLICK_BLOCK)
+        if (event.hasBlock() && event.getAction() == Action.RIGHT_CLICK_BLOCK)
         {
-            if (event.getClickedBlock().getType() == Material.SIGN_POST)
+            if (event.getClickedBlock().getType() == Material.SIGN_POST || event.getClickedBlock().getType() == Material.WALL_SIGN)
             {
                 Sign s = (Sign) event.getClickedBlock().getState();
 
