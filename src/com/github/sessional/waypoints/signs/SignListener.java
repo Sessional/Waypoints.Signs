@@ -5,7 +5,6 @@
 package com.github.sessional.waypoints.signs;
 
 import com.github.sessional.waypoints.WpsPlugin;
-import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.block.Sign;
 import org.bukkit.event.EventHandler;

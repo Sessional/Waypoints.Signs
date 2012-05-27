@@ -6,7 +6,6 @@ package com.github.sessional.waypoints.signs;
 
 import java.io.File;
 import java.util.logging.Logger;
-import org.bukkit.event.EventPriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -16,7 +15,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class WpsSignPlugin extends JavaPlugin
 {
     
-    private Logger log;
+    private static final Logger log = Logger.getLogger("Minecraft");
     private String version = "0.1.1";
     private File configFile;
     private boolean bukkitPermissions;
