@@ -17,7 +17,7 @@ public class WpsSignPlugin extends JavaPlugin
 {
     
     private static final Logger log = Logger.getLogger("Minecraft");
-    private String version = "0.1.1";
+    private String version = "1.0";
     private File configFile;
     private boolean bukkitPermissions;
     
