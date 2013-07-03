@@ -1,6 +1,6 @@
 name: Waypoints.Signs
 version: 1.0
-main: com.github.sessional.waypoints.signs.WpsSignPlugin
+main: waypoints.signs.WpsSignPlugin
 commands:
   wpssigns:
     description: root command
