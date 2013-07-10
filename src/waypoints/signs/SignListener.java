@@ -81,6 +81,8 @@ public class SignListener implements Listener {
                             }
                             plug.getCommandHandler().doGo(event.getPlayer(), wp);
                         }
+                        
+                        event.setCancelled(true);
                     }
                 }
             }
