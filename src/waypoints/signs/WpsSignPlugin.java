@@ -4,9 +4,8 @@
  */
 package waypoints.signs;
 
-import java.io.File;
-import java.util.logging.Logger;
 import org.bukkit.plugin.java.JavaPlugin;
+import waypoints.WaypointPlugin;
 
 
 /**
@@ -15,22 +14,16 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class WpsSignPlugin extends JavaPlugin
 {
-    
-    private static final Logger log = Logger.getLogger("Minecraft");
-    private String version = "1.0";
-    private File configFile;
     private boolean bukkitPermissions;
+    
+    private WaypointPlugin plugin;
     
     @Override
     public void onEnable()
     {
-        configFile = new File("./plugins/Waypoints.Signs/config.yml");
-        if (!configFile.exists())
-        {
-            this.saveDefaultConfig();
-        }
+        plugin = (WaypointPlugin) getServer().getPluginManager().getPlugin("Waypoints");
         
-        if (this.getConfig().getBoolean("bukkitPermissions") == true)
+        if (plugin.getConfigManager().permissionsEnabled())
         {
             bukkitPermissions = true;
         } else
@@ -39,6 +32,11 @@ public class WpsSignPlugin extends JavaPlugin
         }
         
         getServer().getPluginManager().registerEvents(new SignListener(this), this);
+    }
+    
+    public WaypointPlugin getPlugin()
+    {
+        return plugin;
     }
     
     public boolean isBukkitPermissions()

@@ -11,7 +11,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import waypoints.WaypointPlugin;
 
 /**
  *
@@ -33,8 +32,7 @@ public class SignListener implements Listener {
     public void onSignChange(SignChangeEvent event) {
         for (int i = 0; i < event.getLines().length - 1; i++) {
             if (event.getLine(i).contains("Waypoint:")) {
-                WaypointPlugin plug = (WaypointPlugin) getPlugin().getServer().getPluginManager().getPlugin("Waypoints");
-                if (plug.doesWaypointExist(event.getLine(i + 1))) {
+                if (wpsPlugin.getPlugin().doesWaypointExist(event.getLine(i + 1))) {
                     if (getPlugin().isBukkitPermissions()) {
                         if (event.getPlayer().hasPermission("waypoints.signs.create")) {
                             event.getPlayer().sendMessage("This sign will now teleport you to waypoint §a" + event.getLine(i + 1));
@@ -63,13 +61,12 @@ public class SignListener implements Listener {
                 for (int i = 0; i < s.getLines().length - 1; i++) {
                     if (s.getLine(i).equals("Waypoint:") || s.getLine(i).equals("§aWaypoint:")) {
                         String wp = s.getLine(i + 1);
-                        WaypointPlugin plug = (WaypointPlugin) getPlugin().getServer().getPluginManager().getPlugin("Waypoints");
                         if (getPlugin().isBukkitPermissions()) {
                             if (event.getPlayer().hasPermission("waypoints.go") || event.getPlayer().hasPermission("waypoints.signs.go")) {
                                 if (!s.getLine(i).equals("§aWaypoint:")) {
                                     s.setLine(i, "§aWaypoint:");
                                 }
-                                plug.getCommandHandler().doGo(event.getPlayer(), wp);
+                                wpsPlugin.getPlugin().getCommandHandler().doGo(event.getPlayer(), wp);
                             } else {
                                 event.getPlayer().sendMessage("You do not have permission to sign waypoint.");
                             }
@@ -79,7 +76,7 @@ public class SignListener implements Listener {
                                 s.setLine(i, "§aWaypoint:");
                                 s.update();
                             }
-                            plug.getCommandHandler().doGo(event.getPlayer(), wp);
+                            wpsPlugin.getPlugin().getCommandHandler().doGo(event.getPlayer(), wp);
                         }
                         
                         event.setCancelled(true);
