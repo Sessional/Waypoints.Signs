@@ -37,6 +37,7 @@ public class SignListener implements Listener {
                         if (event.getPlayer().hasPermission("waypoints.signs.create")) {
                             event.getPlayer().sendMessage("This sign will now teleport you to waypoint §a" + event.getLine(i + 1));
                             event.setLine(i, "§aWaypoint:");
+                            ((Sign)event.getBlock().getState()).update();
                         } else {
                             event.getBlock().breakNaturally();
                             event.getPlayer().sendMessage("You do not have permissions to create a sign. " + event.getLine(i + 1));
@@ -44,6 +45,7 @@ public class SignListener implements Listener {
                     } else {
                         event.getPlayer().sendMessage("This sign will now teleport you to waypoint §a" + event.getLine(i + 1));
                         event.setLine(i, "§aWaypoint:");
+                        ((Sign)event.getBlock().getState()).update();
                     }
                 } else {
                     event.getPlayer().sendMessage("A waypoint with name " + event.getLine(i + 1) + " does not seem to exist.");
@@ -65,6 +67,7 @@ public class SignListener implements Listener {
                             if (event.getPlayer().hasPermission("waypoints.go") || event.getPlayer().hasPermission("waypoints.signs.go")) {
                                 if (!s.getLine(i).equals("§aWaypoint:")) {
                                     s.setLine(i, "§aWaypoint:");
+                                    s.update();
                                 }
                                 wpsPlugin.getPlugin().getCommandHandler().doGo(event.getPlayer(), wp);
                             } else {
@@ -72,7 +75,6 @@ public class SignListener implements Listener {
                             }
                         } else {
                             if (!s.getLine(i).equals("§aWaypoint:")) {
-                                System.out.println("Set color!");
                                 s.setLine(i, "§aWaypoint:");
                                 s.update();
                             }
