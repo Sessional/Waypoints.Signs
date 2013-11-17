@@ -1,5 +1,5 @@
 name: Waypoints.Signs
-version: 2.2
+version: 2.3
 main: waypoints.signs.WpsSignPlugin
 commands:
   wpssigns:
