@@ -96,7 +96,28 @@ public class SignListener implements Listener {
                                     s.setLine(i, "§aWaypoint:");
                                     s.update();
                                 }
-                                wpsPlugin.getPlugin().getCommandHandler().doGo(event.getPlayer(), wp);
+                                if (wpsPlugin.getPlugin().getConfigManager().costingEnabled())
+                                {
+                                    if (s.getLine(i + 2).equals(""))
+                                    {
+                                        wpsPlugin.getPlugin().getCommandHandler().doGo(event.getPlayer(), wp);
+                                    }
+                                    else
+                                    {
+                                        int cost = Integer.parseInt(s.getLine(i+2));
+                                        if (event.getPlayer().getLevel() < cost)
+                                        {
+                                            event.getPlayer().sendMessage("You don't have the required levels to do that.");
+                                            return;
+                                        }
+                                        event.getPlayer().setLevel(event.getPlayer().getLevel() - cost);
+                                        wpsPlugin.getPlugin().getCommandHandler().doGoNoCost(event.getPlayer(), wp);
+                                    }
+                                }
+                                else
+                                {
+                                    wpsPlugin.getPlugin().getCommandHandler().doGo(event.getPlayer(), wp);
+                                }
                             } else {
                                 event.getPlayer().sendMessage("You do not have permission to sign waypoint.");
                             }
@@ -105,7 +126,28 @@ public class SignListener implements Listener {
                                 s.setLine(i, "§aWaypoint:");
                                 s.update();
                             }
-                            wpsPlugin.getPlugin().getCommandHandler().doGo(event.getPlayer(), wp);
+                            if (wpsPlugin.getPlugin().getConfigManager().costingEnabled())
+                            {
+                                if (s.getLine(i + 2).equals(""))
+                                {
+                                    wpsPlugin.getPlugin().getCommandHandler().doGo(event.getPlayer(), wp);
+                                }
+                                else
+                                {
+                                    int cost = Integer.parseInt(s.getLine(i+2));
+                                    if (event.getPlayer().getLevel() < cost)
+                                    {
+                                        event.getPlayer().sendMessage("You don't have the required levels to do that.");
+                                        return;
+                                    }
+                                    event.getPlayer().setLevel(event.getPlayer().getLevel() - cost);
+                                    wpsPlugin.getPlugin().getCommandHandler().doGoNoCost(event.getPlayer(), wp);
+                                }
+                            }
+                            else
+                            {
+                                wpsPlugin.getPlugin().getCommandHandler().doGo(event.getPlayer(), wp);
+                            }
                         }
                         event.setCancelled(true);
                     }
